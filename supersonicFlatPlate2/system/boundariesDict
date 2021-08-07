@@ -1,0 +1,171 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1706                                 |
+|   \\  /    A nd           | Web:      http://www.openfoam.org               |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      boundariesDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dsmcPatchBoundaries
+( 
+    boundary
+    {
+        patchBoundaryProperties
+        {
+            patchName     obstacle;
+        }
+
+        boundaryModel        dsmcCLLWallPatch;
+
+        dsmcCLLWallPatchProperties
+        {
+          normalAccommodationCoefficient            0.875;
+          tangentialAccommodationCoefficient        0.875;
+          rotationalEnergyAccommodationCoefficient  0.875;
+          vibrationalEnergyAccommodationCoefficient 0.875;
+          
+          velocity             (0 0 0);
+          temperature            300;
+
+        }
+    }
+
+
+    boundary
+    {
+        patchBoundaryProperties
+        {
+         patchName                           inflow;
+        }
+
+        boundaryModel   dsmcDeletionPatch;
+
+        dsmcDeletionPatchProperties
+        {
+            allSpecies		yes;
+        }
+     }
+
+    boundary
+    {
+        patchBoundaryProperties
+        {
+         patchName                           outflow;
+        }
+
+        boundaryModel   dsmcDeletionPatch;
+
+        dsmcDeletionPatchProperties
+        {
+            allSpecies		yes;
+        }
+       
+     }
+  
+
+   boundary
+    {
+        patchBoundaryProperties
+        {
+         patchName                           topwall;
+        }
+
+        boundaryModel   dsmcDeletionPatch;
+
+        dsmcDeletionPatchProperties
+        {
+            allSpecies		yes;
+        }
+     }
+
+
+);
+
+dsmcCyclicBoundaries
+(
+
+);
+
+dsmcGeneralBoundaries
+(
+    boundary
+    {
+        generalBoundaryProperties
+        {
+            patchName                inflow;
+        }
+
+        boundaryModel   dsmcFreeStreamInflowFieldPatch;
+
+        dsmcFreeStreamInflowFieldPatchProperties
+        {
+			      typeIds				                (N2cold);
+			      numberDensities
+			      {
+				         N2cold		7.2517775300383995e21;
+			      }
+			      
+			      translationalTemperature			    10;
+			      rotationalTemperature			    10;
+			      velocity			                (730 0 0);
+	      }
+    }
+
+    boundary
+    {
+        generalBoundaryProperties
+        {
+            patchName                outflow;
+        }
+
+        boundaryModel   dsmcFreeStreamInflowFieldPatch;
+
+        dsmcFreeStreamInflowFieldPatchProperties
+        {
+			      typeIds				                (N2cold);
+			      numberDensities
+			      {
+				         N2cold		7.2517775300383995e21;
+			      }
+			      
+			      translationalTemperature			10;
+			      rotationalTemperature			    10;
+			      velocity			                (730 0 0);
+	      }
+    }
+
+    boundary
+    {
+        generalBoundaryProperties
+        {
+            patchName                topwall;
+        }
+
+        boundaryModel   dsmcFreeStreamInflowFieldPatch;
+
+        dsmcFreeStreamInflowFieldPatchProperties
+        {
+			      typeIds				                (N2cold);
+			      numberDensities
+			      {
+				         N2cold		7.2517775300383995e21;
+			      }
+			      
+			      translationalTemperature			10;
+			      rotationalTemperature			    10;
+			      velocity			                (730 0 0);
+	      }
+    }
+     
+);
+
+// ************************************************************************* //
